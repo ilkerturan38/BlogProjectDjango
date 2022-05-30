@@ -1,0 +1,5 @@
+
+- ModelForm ile oluşturulan hiçbir form'da clean,validasyon işlemi yapılamadı.
+- Authenticate işlemi sadece User modeli üzerinden çalışıyor,diğer modeller üzerinden login işlemi yapılamadı.
+- Ayrı Model üzerinden (User Modeli Değil) Authenticate yapıp yazara göre blog kayıtlarını gösterme işlemi yapılamadı.
+- Bloglara tıklanıldığında blog okunma sayısını bir arttırma,yapılamadı.

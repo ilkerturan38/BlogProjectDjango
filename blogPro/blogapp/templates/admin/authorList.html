@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<div class="site-cover site-cover-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% if author %}
+                    <table class="table table-dark table-striped table-bordered table-hover table-sm">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Kullanıcı Adı</th>
+                                <th>Şifre</th>
+                                <th>Adı-Soyadı</th>
+                                <th>Doğum Tarihi</th>
+                                <th>Resim</th>
+                                <th>Onay Tipi</th>
+                                <th>Durum</th>
+                                <th>Güncelle</th>
+                                <th>Sil</th>
+                                <th>Yazara ait Bloglar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in author %}
+                            <tr>
+                                    <td>{{ item.nameSurname }}</td>
+                                    <td>{{ item.password }}</td>
+                                    <td>{{ item.nameSurname }}</td>
+                                    <td>{{ item.birthday }}</td>
+                                    {% if item.imageURL %}
+                                    <td><img src="{{item.imageURL.url}}" alt="" width="140" height="150"></td>
+                                    {% else %}
+                                    <td><img src="{% static 'blog/images/image-not-found.png' %" alt="" width="140" height="150"></td>
+                                    {% endif %}
+                                    <td class="text-center">
+                                        {% if item.status|yesno:"yeah" %}
+                                            <a href="{% url 'authorStatusUpdateFalse' item.id %}" class="btn btn-danger">Pasif Yap</a>
+                                        {% else %}
+                                            <a href="{% url 'authorStatusUpdateTrue' item.id %}" class="btn btn-success">Aktif Yap</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.status }}</td>
+                                    <td>
+                                        <a href="{% url 'authorUpdate' item.id %}" class="btn btn-info">Güncelle</a>
+                                    </td>
+                                    <td>
+                                        <a href="/authorDelete/{{ item.id }}" class="btn btn-secondary">Sil</a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'authorBlog' item.id %}" class="btn btn-info">Git</a>
+                                    </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>
+                        Author Kayıtları Bulunamadı..
+                    </p>
+                {% endif %}
+                <a href="{% url 'authorInsert' %}" class="btn btn-primary">Yeni Yazar Ekle</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

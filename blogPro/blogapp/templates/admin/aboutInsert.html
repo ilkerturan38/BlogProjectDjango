@@ -1,0 +1,23 @@
+
+{% extends 'layout.html' %}
+
+{% block title %} Hakkımızda {% endblock %}
+ 
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="site-cover site-cover-sm">
+    <div class="container">
+
+<form action="{% url 'aboutInsert' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    {{ form.media }} 
+    <input type="submit" value="Hakkımızda Bilgisi Ekle" class="btn btn-danger">
+</form>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            {% if sonuc %}
+                {% for item in sonuc %}
+                <div class="col-lg-4 mb-4">
+                    <div class="entry2">
+                        {% if item.fileURL.url is not None %}
+                            <a href="single.html"><img src="{{item.fileURL.url}}" alt="Image" class="img-fluid rounded" width="140"></a>
+                        {% else %}
+                            <a href="single.html"><img src="{% static 'images/image-not-found.png' %}" alt="Resim Getirilemedi.." class="img-fluid rounded"></a>
+                        {% endif %}
+                      <div class="excerpt">
+                 
+                      <span class="post-category text-white bg-secondary mb-3">{{item.categories.name}}</span>
+                    
+                      <h2><a href="{% url 'blogDetails' item.id %}">{{item.title}}</a></h2>
+                      
+                        <p>{{item.description|truncatewords:15 |safe }}</p>
+                        <p><a href="#">Devamını Oku..</a></p>
+                      </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>
+                    Hiçbir Sonuç Bulunamadı…
+                </p>
+            {% endif %}
+        </div>
+        <div class="row text-center pt-5 border-top">
+            <div class="col-md-12">
+                <div class="demo">
+                    <nav class="pagination-outer" aria-label="Page navigation">
+                        <ul class="pagination">
+                            {% if sonuc.has_previous %}
+                                 <li class="page-item"><a class="page-link" href="?page={{ sonuc.previous_page_number }}">«</a></li>
+                            {% endif %} 
+                            {% for i in sonuc.paginator.page_range %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endfor %}
+                            {% if sonuc.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ sonuc.next_page_number }}">»</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

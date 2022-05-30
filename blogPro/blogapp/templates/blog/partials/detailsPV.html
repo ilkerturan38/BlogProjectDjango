@@ -1,0 +1,165 @@
+{% load static %}
+{% load humanize %}
+<div class="site-cover site-cover-sm same-height overlay single-page" style="background-image: url('images/img_2.jpg');">
+  <div class="container">
+    <div class="row same-height justify-content-center">
+      <div class="col-md-12 col-lg-10">
+        <div class="post-entry text-center">
+          <span class="post-category text-white bg-success mb-3">{{blog.categories.name}}</span>
+          <h1 class="mb-4"><a href="#">{{blog.title}}</a></h1>
+          <div class="post-meta align-items-center text-center">
+            {% if blog.fileURL %}
+              <figure class="author-figure mb-0 mr-3 d-inline-block"><img src="{{blog.fileURL.url}}" alt="Image" class="img-fluid"></figure>
+            {% else %}
+            {
+              <figure class="author-figure mb-0 mr-3 d-inline-block"><img src="{% static 'blog/images/image-not-found.png' %}" alt="Image" class="img-fluid"></figure>
+            }
+            {% endif %}
+            <span class="d-inline-block mt-1">{{blog.title}}</span>
+            <span>&nbsp;-&nbsp; {{blog.release_date}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="site-section py-lg">
+  
+  <div class="container">
+    
+    <div class="row blog-entries element-animate">
+
+      <div class="col-md-12 col-lg-8 main-content">
+        
+        <div class="post-content-body">
+          <p>{{blog.description|safe}}</p>
+          
+          <!--
+          <div class="post-content-body">
+            
+            <div class="row mb-5 mt-5">
+              <div class="col-md-12 mb-4">
+                {% if blog.fileURL %}
+                  <img src="{{blog.fileURL.url}}" alt="Image placeholder" class="img-fluid rounded" width="200">
+                {% else %}
+                  <img src="{% static 'blog/images/image-not-found.png' %}" alt="Image placeholder" class="img-fluid rounded" width="200">
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          -->
+      </div>
+
+      <div class="pt-5">
+        <p>Categories: <a href="#">{{blog.categories.name}}</a> </p>
+      </div>
+
+      <div class="pt-5">
+        {% for item in comment %}
+          <div class="be-comment">
+            <div class="be-img-comment">	
+              <a href="blog-detail-2.html">
+                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+              </a>
+            </div>
+            <div class="be-comment-content">
+              
+                <span class="be-comment-name">
+                  <a href="blog-detail-2.html">{{item.nameSurname}}</a>
+                  </span>
+                <span class="be-comment-time">
+                  <i class="fa fa-clock-o"></i>
+                  {{ item.comment_date|naturaltime }}
+                </span>
+        
+              <p class="be-comment-text">
+                {{ item.message }}
+              </p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+        <div class="comment-form-wrap pt-5">
+            <h3 class="mb-5">Yeni Bir Yorum Ekle</h3>
+            <form action="{% url 'commentInsert' blog.id  %}" class="p-5 bg-light" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" class="form-control" id="name" name="nameSurname" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" cols="30" rows="10" class="form-control" name="message" required></textarea>
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Gönder" class="btn btn-primary">
+              </div>
+
+            </form>
+          </div>
+      </div>
+
+      <div class="col-md-12 col-lg-4 sidebar">
+        <div class="sidebar-box search-form-wrap">
+          <form action="#" class="search-form">
+            <div class="form-group">
+              <span class="icon fa fa-search"></span>
+              <input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter">
+            </div>
+          </form>
+        </div>
+        <!-- END sidebar-box -->
+
+        <div class="sidebar-box">
+          <div class="bio text-center">
+            <img src="{{yazarResmi.url}}" alt="Image Placeholder" class="img-fluid mb-5">
+            <div class="bio-body">
+              <h2>{{yazarAdi}}</h2>
+              <p class="mb-4">{{yazarHakkinda}}</p>
+              <p><a href="#" class="btn btn-primary btn-sm rounded px-4 py-2">Yazar Detayı</a></p>
+              <p class="social">
+                <a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
+                <a href="#" class="p-2"><span class="fa fa-twitter"></span></a>
+                <a href="#" class="p-2"><span class="fa fa-instagram"></span></a>
+                <a href="#" class="p-2"><span class="fa fa-youtube-play"></span></a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- END sidebar-box -->  
+        <div class="sidebar-box">
+          <h3 class="heading">Yazarın Tüm Blog Yazıları</h3>
+          <div class="post-entry-sidebar">
+            <ul>
+              {% for item in yazarinBloglari%}
+              <li>
+                <a href="{% url 'blogDetails' item.id %}">
+                  {% if item.fileURL %}
+                    <img src="{{item.fileURL.url}}" alt="Image placeholder" class="mr-4">
+                  {% else %}
+                    <img src="{% static 'blog/images/image-not-found.png' %}" alt="Image" class="mr-4">
+                  {% endif %}
+                  <div class="text">
+                    <h4>{{item.title}}</h4>
+                    <div class="post-meta">
+                      <span class="mr-2">{{item.release_date}}</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <!-- END sidebar-box -->
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% if islem2 %}
+                <div class="table-responsive-sm">
+                    <table class="table table-dark table-striped table-bordered table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Başlık</th>
+                                <th>Detay</th>
+                                <th>Dosya</th>
+                                <th>Kategori</th>
+                                <th>Onay Tipi</th>
+                                <th>Durum</th>
+                                <th>Güncelle</th>
+                                <th>Sil</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in islem2 %}
+                            <tr>
+                                    <td>{{ item.title }}</td>
+                                    <td>{{ item.description| safe |truncatewords:10 }}</td>
+                                    {% if item.fileURL %}
+                                        <td><img src="{{item.fileURL.url}}" alt="" width="140" height="150"></td>
+                                    {% else %}
+                                        <td><img src="{% static 'blog/images/image-not-found.png' %}" alt="" width="140" height="150"></td>
+                                    {% endif %}
+                                    <td>{{ item.categories.name }}</td>
+                                    <td class="text-center">
+                                        {% if item.status|yesno:"yeah" %}
+                                            <a href="{% url 'AuthorBlogStatusUpdateFalse' item.id %}" class="btn btn-danger">Pasif Yap</a>
+                                        {% else %}
+                                            <a href="{% url 'AuthorBlogStatusUpdateTrue' item.id %}" class="btn btn-success">Aktif Yap</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.status }}</td>
+                                    <td>
+                                        <a href="{% url 'blogUpdate' item.id %}" class="btn btn-info">Güncelle</a>
+                                    </td>
+                                    <td>
+                                        <a href="/blogDelete/{{ item.id }}" class="btn btn-secondary">Sil</a>
+                                    </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>   
+                {% else %}
+                    <p>
+                        Bu Yazara ait Hiçbir Blog Kaydı Bulunamadı..
+                    </p>
+                {% endif %}
+               
+        </div>
+    </div>
+</div>
+{% endblock %}

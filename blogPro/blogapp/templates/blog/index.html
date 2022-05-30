@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block title %} miniBlog | Django Web Project {% endblock %}
+
+{% block css_files %}
+
+<link rel="stylesheet" href="{% static 'blog/css/pagination.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+  
+<div class="site-wrap">
+
+  {% include 'partials\searchPV.html' %}
+  
+  {% include 'blog\partials\featuredPostPV.html' %}
+
+  {% include 'blog\partials\fullblogListPV.html' %}
+
+  {% include 'blog\partials\mostreadBlogPV.html' %}
+    
+</div>
+{% endblock %}

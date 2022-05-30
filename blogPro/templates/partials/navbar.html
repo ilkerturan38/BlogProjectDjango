@@ -1,0 +1,115 @@
+{% load deneme_tags %}
+{% load static %}
+
+<div class="navigation-wrap bg-light start-header start-style">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="navbar navbar-expand-md navbar-light">
+                    <a class="navbar-brand" href="{% url 'index' %}">
+                        <img src="{% static 'images/logo.jpg' %}" alt="">
+                    </a>
+                    <button class="navbar-toggler"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav py-4 ml-auto py-md-0">
+                            <li>
+                                <div id="searchExtraMenu">
+                                    <form action="{% url 'search' %}">
+                                        <div class="input-group">
+                                            {% csrf_token %}
+                                            <input type="text"
+                                                   class="form-control"
+                                                   placeholder="Blog Ara.."
+                                                   name="value">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-secondary" type="submit">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                            <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                <a class="nav-link"
+                                   href="{% url 'index' %}"
+                                   role="button"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">Anasayfa</a>
+                            </li>
+                            <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                <a class="nav-link" href="{% url 'about' %}">Hakkımızda</a>
+                            </li>
+                            <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                <a class="nav-link dropdown-toggle"
+                                   data-toggle="dropdown"
+                                   href="#"
+                                   role="button"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">Kategoriler</a>
+                                <div class="dropdown-menu">
+                                    {% genre_post as sorgu %}
+                                    {% for item in sorgu %}
+                                        <a class="dropdown-item" href="/categoryBlogList/{{item.slug}}">{{item.name}}</a>
+                                    {% endfor %}
+                                </div>
+                            </li>
+                            <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                <a class="nav-link" href="{% url 'contact' %}">İletişim</a>
+                            </li>
+                            <!-- sayfaya g�nderilen request i�erisinde bulunan, user objesine ula�t�k.-->
+                            {% if user.is_authenticated and request.user.is_staff %}
+                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                    <a class="nav-link dropdown-toggle"
+                                       data-toggle="dropdown"
+                                       href="#"
+                                       role="button"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">Editör Kısmı</a>
+                                    {% include 'partials\editorblogPV.html' %}
+                                </li>
+                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                    <a class="nav-link" href="{% url 'logout' %}">Çıkış Yap</a>
+                                </li>
+                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                    <span>Hoşgeldiniz,{{ user.username }}</span>
+                                </li>
+                            {% elif user.is_authenticated and request.user.is_superuser %}
+                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                    <a class="nav-link dropdown-toggle"
+                                       data-toggle="dropdown"
+                                       href="#"
+                                       role="button"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">Yetkili Kategorisi</a>
+                                    {% include 'partials\admincategoryPV.html' %}
+                                </li>
+                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                    <a class="nav-link" href="{% url 'logout' %}">Çıkış Yap</a>
+                                </li>
+                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                    <span>Hoşgeldiniz,{{ user.username }}</span>
+                                </li>
+                            {% else %}
+                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                    <a class="nav-link" href="{% url 'login' %}">Giriş Yap</a>
+                                </li>
+                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                    <a class="nav-link" href="{% url 'register' %}">Kayıt Ol</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

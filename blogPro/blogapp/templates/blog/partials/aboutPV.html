@@ -1,0 +1,99 @@
+<div class="site-cover site-cover-sm same-height overlay single-page" style="background-image: url('../../Content/miniblog/images/img_4.jpg');">
+  <div class="container">
+      <div class="row same-height justify-content-center">
+          <div class="col-md-12 col-lg-10">
+              <div class="post-entry text-center">
+                  <h1 class="">Hakkımızda..</h1>
+                  <p class="lead mb-4 text-white">Sizler için yüzlerce Blog yazan,Yazarlarımızı ve ekibimizi daha yakından tanımak ister misiniz ?</p>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+  
+  
+  <div class="site-section bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 order-md-2">
+          <img src="{{hakkimizda.imageURL1.url}}" alt="Image" class="img-fluid">
+        </div>
+        <div class="col-md-5 mr-auto order-md-1">
+          <h2>Biz Kimiz ?</h2>
+          <p>{{ hakkimizda.description1 }}</p>
+          <ul class="ul-check list-unstyled success">
+            <li>Her 10 yeni Blog Yazısı</li>
+            <li>15'ten Fazla Kategori</li>
+            <li>21 Farklı Dinamik Yazar</li>
+            <li>Günlük 4500 Tekil Okunma</li>
+            <li>27 Farklı Ülkeden Takipçi</li>
+            <li>Sosyal Medyada 325k Abone</li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-section">
+    <div class="container">
+      <div class="row mb-5 justify-content-center">
+        <div class="col-md-5 text-center">
+          <h2>Tüm Yazarlar</h2>
+          <p>Genel Yazar Sayımız | {{ toplamyazar }} | kişiden oluşmaktadır.</p>
+        </div>
+      </div>
+      <div class="row">
+      {% for item in yazar %}
+        <div class="col-md-6 col-lg-4 mb-5 text-center">
+          <img src="{{item.imageURL.url}}" alt="Image" class="img-fluid w-50 rounded-circle mb-4">
+          <h2 class="mb-3 h5">{{item.nameSurname}}</h2>
+          <p>{{item.about}}</p>
+
+          <p class="mt-5">
+            <a href="#" class="p-3"><span class="icon-facebook"></span></a>
+            <a href="#" class="p-3"><span class="icon-instagram"></span></a>
+            <a href="#" class="p-3"><span class="icon-twitter"></span></a>
+          </p>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+  
+  <div class="site-section bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="{{hakkimizda.imageURL2.url}}" alt="Image" class="img-fluid">
+        </div>
+        <div class="col-md-5 ml-auto">
+          <h2>Learn From Us</h2>
+          <p class="mb-4">{{ hakkimizda.description2 }}</p>
+          
+          <ul class="ul-check list-unstyled success">
+            <li>Onsectetur adipisicing elit</li>
+            <li>Dolorem saepe non eligendi possimus</li>
+            <li>Voluptate odit corrupti vitae</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="site-section bg-white">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-md-5">
+          <div class="subscribe-1 ">
+            <h2>Subscribe to our newsletter</h2>
+            <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit nesciunt error illum a explicabo, ipsam nostrum.</p>
+            <form action="#" class="d-flex">
+              <input type="text" class="form-control" placeholder="Enter your email address">
+              <input type="submit" class="btn btn-primary" value="Subscribe">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
